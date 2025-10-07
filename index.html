@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tulkinjon - Xalqaro Sertifikat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #FFD700;
+            --accent: #FFA500;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --transparent-bg: rgba(0, 0, 0, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://img.shetu66.com/2023/12/07/1701940730136633.png') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--transparent-bg);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: var(--secondary);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            margin-right: 10px;
+            color: var(--secondary);
+            animation: spin 15s linear infinite;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 200px 0 100px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            animation: slideInFromTop 1.5s ease-out;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+            color: var(--secondary);
+        }
+
+        .hero p {
+            font-size: 1.8rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            animation: slideInFromBottom 1.5s ease-out 0.5s both;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .highlight {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* Main Content Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            color: var(--secondary);
+            display: inline-block;
+            position: relative;
+            animation: fadeIn 1s ease-out;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--secondary), transparent);
+            bottom: -15px;
+            left: 15%;
+            border-radius: 2px;
+            animation: expandWidth 2s ease-out;
+        }
+
+        /* Achievements Section */
+        .achievements {
+            background: var(--transparent-bg);
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin: 50px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .achievement-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .achievement-card {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            animation: fadeInUp 1s ease-out;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.2);
+            border-color: var(--secondary);
+        }
+
+        .achievement-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+            animation: bounce 3s infinite;
+        }
+
+        .achievement-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .achievement-card p {
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .partner-card {
+            grid-column: 1 / -1;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            animation: pulse 4s infinite;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .partner-card h3 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .partner-logos {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .partner-logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            padding: 15px 25px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .partner-logo:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-card {
+            background: var(--transparent-bg);
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s ease;
+            animation: fadeInUp 1s ease-out;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.05), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .skill-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .skill-card h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .skill-card p {
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--transparent-bg);
+            color: white;
+            padding: 70px 0 30px;
+            border-top: 2px solid var(--secondary);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--secondary);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid var(--secondary);
+        }
+
+        .social-links a:hover {
+            background: var(--secondary);
+            color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInFromTop {
+            from { 
+                opacity: 0;
+                transform: translateY(-80px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            from { 
+                opacity: 0;
+                transform: translateY(80px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px rgba(255, 215, 0, 0.7); }
+            to { text-shadow: 0 0 20px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.6); }
+        }
+
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 70%; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+
+            nav li {
+                margin: 0 10px;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.4rem;
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .achievement-cards, .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .partner-logos {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-crown logo-icon"></i>
+                    <div class="logo-text">The Best</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#achievements">Yutuqlar</a></li>
+                        <li><a href="#skills">Ko'nikmalar</a></li>
+                        <li><a href="#contact">Bog'lanish</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Xalqaro Sertifikat</h1>
+            <p>Tulkinjon - <span class="highlight">Dasturchi</span>, <span class="highlight">HTML kodlar mutaxasisi</span> va <span class="highlight">bir nechta kompaniyalar hamkori</span></p>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements">
+        <div class="container">
+            <div class="section-title">
+                <h2>2025 Yildagi Yutuqlar</h2>
+            </div>
+            <div class="achievements">
+                <div class="achievement-cards">
+                    <div class="achievement-card">
+                        <i class="fas fa-laptop-code achievement-icon"></i>
+                        <h3>Dasturlash</h3>
+                        <p>Statik saytlar va murakkab bo'lmagan dasturlar yaratish bo'yicha muvaffaqiyatli loyihalar</p>
+                    </div>
+                    <div class="achievement-card">
+                        <i class="fas fa-futbol achievement-icon"></i>
+                        <h3>Futbol Tahlili</h3>
+                        <p>INSAYDER futbol tahlil qilish ekspertlar jamoasi a'zosi sifatida faoliyat</p>
+                    </div>
+                    <div class="achievement-card">
+                        <i class="fas fa-chart-line achievement-icon"></i>
+                        <h3>TRADING</h3>
+                        <p>Kripto valyuta savdosi bo'yicha mutaxassis sifatida muvaffaqiyatli operatsiyalar</p>
+                    </div>
+                    <div class="partner-card">
+                        <h3>O'zbekistondagi Hamkor Kompaniyalar</h3>
+                        <div class="partner-logos">
+                            <div class="partner-logo">WinWin</div>
+                            <div class="partner-logo">1xBet</div>
+                            <div class="partner-logo">DBbet</div>
+                            <div class="partner-logo">888Starz</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ko'nikmalar va Sohalar</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Dasturlash</h3>
+                    <p>Statik saytlar yaratish va murakkab bo'lmagan dasturlar ishlab chiqish bo'yicha tajriba. HTML, CSS, JavaScript va boshqa zamonaviy texnologiyalarni qo'llash.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Futbol Tahlili</h3>
+                    <p>INSAYDER futbol tahlil qilish ekspertlar jamoasi a'zosi sifatida chuqur bilim va tahlil qobiliyati. Futbol bo'yicha professional tahlillar va bashoratlar.</p>
+                </div>
+                <div class="skill-card">
+                    <h3>TRADING</h3>
+                    <p>Kripto valyuta savdosi bo'yicha mutaxassislik. Kripto bozorini tahlil qilish, savdo strategiyalari ishlab chiqish va foydali operatsiyalarni amalga oshirish.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Bog'lanish</h3>
+                    <p><i class="fas fa-envelope"></i> info@tulkinjon.uz</p>
+                    <p><i class="fas fa-phone"></i> +7 999 021 87 42</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Toshkent, O'zbekiston</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Tezkor Havolalar</h3>
+                    <p><a href="#achievements">Yutuqlar</a></p>
+                    <p><a href="#skills">Ko'nikmalar</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Xalqaro Sertifikat</h3>
+                    <p>Tulkinjon xalqaro miqyosda tan olingan sertifikatlarga ega bo'lib, O'zbekistonda texnologiya sohasini rivojlantirishga hissa qo'shmoqda.</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Tulkinjon. Barcha huquqlar himoyalangan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.achievement-card, .skill-card, .partner-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'paused';
+                observer.observe(el);
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
