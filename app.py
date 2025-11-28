@@ -7,6 +7,9 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)
 
+# Production sozlamalari
+app.config['JSON_AS_ASCII'] = False
+
 # Bot ma'lumotlari fayli
 DATA_FILE = "data.json"
 
@@ -21,7 +24,23 @@ def load_data():
         initial_data = {
             "users": {},
             "coupons": {
-                "available": [],
+                "available": [
+                    {
+                        "id": "1001",
+                        "time": "20:00",
+                        "league": "Premier League",
+                        "teams": "Man City vs Arsenal",
+                        "prediction": "1X",
+                        "odds": "1.50",
+                        "confidence": "85%",
+                        "codes": {
+                            "1xbet": "CITY123",
+                            "melbet": "MBC456",
+                            "dbbet": "DB789"
+                        },
+                        "added_date": datetime.now().strftime("%Y-%m-%d %H:%M")
+                    }
+                ],
                 "purchased": {}
             },
             "settings": {
@@ -54,6 +73,15 @@ def save_data(data):
 def serve_index():
     return send_from_directory('templates', 'index.html')
 
+@app.route('/api/health')
+def health_check():
+    """Health check endpoint"""
+    return jsonify({
+        'status': 'healthy',
+        'service': 'Futbol Baholari API',
+        'timestamp': datetime.now().isoformat()
+    })
+
 @app.route('/api/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     """Foydalanuvchi ma'lumotlarini olish"""
@@ -79,7 +107,8 @@ def get_user(user_id):
                 'purchased_coupons': purchased_count,
                 'points_history': user.get('points_history', []),
                 'joined_date': user.get('joined_date', ''),
-                'last_active': user.get('last_active', '')
+                'last_active': user.get('last_active', ''),
+                'last_daily_bonus': user.get('last_daily_bonus', '')
             }
         })
     else:
@@ -116,6 +145,9 @@ def add_referral(user_id):
         'reason': 'Yangi referal taklif',
         'date': datetime.now().strftime("%Y-%m-%d %H:%M")
     })
+    
+    # Faollikni yangilash
+    data['users'][user_key]['last_active'] = datetime.now().strftime("%Y-%m-%d %H:%M")
     
     # Statistikani yangilash
     data['stats']['total_referrals'] = data['stats'].get('total_referrals', 0) + 1
@@ -168,6 +200,9 @@ def buy_coupon(user_id):
         'date': datetime.now().strftime("%Y-%m-%d %H:%M")
     })
     
+    # Faollikni yangilash
+    data['users'][user_key]['last_active'] = datetime.now().strftime("%Y-%m-%d %H:%M")
+    
     # Kuponni sotib olinganlar ro'yxatiga qo'shish
     if coupon['id'] not in data['coupons']['purchased']:
         data['coupons']['purchased'][coupon['id']] = []
@@ -208,6 +243,7 @@ def daily_bonus(user_id):
     current_points = data['users'][user_key].get('points', 0)
     data['users'][user_key]['points'] = current_points + bonus_points
     data['users'][user_key]['last_daily_bonus'] = today
+    data['users'][user_key]['last_active'] = datetime.now().strftime("%Y-%m-%d %H:%M")
     
     # Ball tarixiga qo'shish
     data['users'][user_key]['points_history'].append({
@@ -294,7 +330,15 @@ if __name__ == '__main__':
     if not os.path.exists('templates'):
         os.makedirs('templates')
     
-    print("🚀 Flask API server ishga tushmoqda...")
-    print("📊 API manzili: http://localhost:5000")
-    print("🌐 Veb sayt: http://localhost:5000")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    
+    print("🚀 Futbol Baholari Boti ishga tushmoqda...")
+    print(f"🌐 API manzili: http://0.0.0.0:{port}")
+    print(f"📊 Health check: http://0.0.0.0:{port}/api/health")
+    print("🎯 YANGILANGAN TIZIM:")
+    print("   • 🎁 Yangi foydalanuvchi: 30 ball")
+    print("   • 📅 Kunlik bonus: 10 ball") 
+    print("   • 📤 Referal: 5 ball")
+    print("   • 🎯 Kupon narxi: 15 ball")
+    
+    app.run(host='0.0.0.0', port=port, debug=False)
