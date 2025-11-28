@@ -7,7 +7,10 @@
   },
   "ports": [5000],
   "healthcheck": {
-    "path": "/api/stats",
+    "path": "/api/health",
     "port": 5000
+  },
+  "environment": {
+    "PYTHON_VERSION": "3.10.0"
   }
 }
