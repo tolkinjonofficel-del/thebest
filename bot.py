@@ -7,7 +7,7 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 from datetime import datetime
 
 # Environment variables
-TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '8114630640:AAHqHzsEyL7s7yckyLXfOHltm8m8cYh4F2Q')
+TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '8114630640:AAHAnQY3rnEyWOuCmgwNG6SfKrETpX5mBsg')
 ADMIN_ID = int(os.environ.get('ADMIN_ID', '7081746531'))
 API_URL = os.environ.get('API_URL', 'http://localhost:5000/api')
 
